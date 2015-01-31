@@ -20,6 +20,12 @@ int SRCLK_Pin = 27;
 boolean registers[numOfRegisterPins];
 char rpmHolder;
 
+//rpm flash variables
+int ledState = LOW;
+long previousMillis = 0;
+long interval = 100;
+boolean limit = false;
+
 int shiftBrightnessPin = 2;
 
 int shiftBright00 = 239;
@@ -131,6 +137,25 @@ void setup() {
 }
  
 void loop() {
+  if (limit == true)
+  {
+    unsigned long currentMillis = millis();
+    
+    if (currentMillis - previousMillis > interval)
+    {
+      previousMillis = currentMillis;
+      
+      if (ledState == LOW)
+      {
+        ledState = HIGH;
+      }
+      else
+      {
+        ledState = LOW;
+      }
+      writeAllRpm(ledState);
+    }
+  }
     
     if (incomingByte=Serial.available()>0) {
       
@@ -181,7 +206,6 @@ void loop() {
         {
           updateRpmRegister(rpmHolder);
         }
-        
       }
       
       else
@@ -423,6 +447,7 @@ void updateRpmRegister(char input)
     setRegisterPin(12, LOW);
     setRegisterPin(13, LOW);
     setRegisterPin(14, LOW);
+    limit = false;
     break;
     case 'b':
     setRegisterPin(0, HIGH);
@@ -440,6 +465,7 @@ void updateRpmRegister(char input)
     setRegisterPin(12, LOW);
     setRegisterPin(13, LOW);
     setRegisterPin(14, LOW);
+    limit = false;
     break;
     case 'c':
     setRegisterPin(0, HIGH);
@@ -457,6 +483,7 @@ void updateRpmRegister(char input)
     setRegisterPin(12, LOW);
     setRegisterPin(13, LOW);
     setRegisterPin(14, LOW);
+    limit = false;
     break;
     case 'd':
     setRegisterPin(0, HIGH);
@@ -474,6 +501,7 @@ void updateRpmRegister(char input)
     setRegisterPin(12, LOW);
     setRegisterPin(13, LOW);
     setRegisterPin(14, LOW);
+    limit = false;
     break;
     case 'e':
     setRegisterPin(0, HIGH);
@@ -491,6 +519,7 @@ void updateRpmRegister(char input)
     setRegisterPin(12, LOW);
     setRegisterPin(13, LOW);
     setRegisterPin(14, LOW);
+    limit = false;
     break;
     case 'f':
     setRegisterPin(0, HIGH);
@@ -508,6 +537,7 @@ void updateRpmRegister(char input)
     setRegisterPin(12, LOW);
     setRegisterPin(13, LOW);
     setRegisterPin(14, LOW);
+    limit = false;
     break;
     case 'g':
     setRegisterPin(0, HIGH);
@@ -525,6 +555,7 @@ void updateRpmRegister(char input)
     setRegisterPin(12, LOW);
     setRegisterPin(13, LOW);
     setRegisterPin(14, LOW);
+    limit = false;
     break;
     case 'h':
     setRegisterPin(0, HIGH);
@@ -542,6 +573,7 @@ void updateRpmRegister(char input)
     setRegisterPin(12, LOW);
     setRegisterPin(13, LOW);
     setRegisterPin(14, LOW);
+    limit = false;
     break;
     case 'i':
     setRegisterPin(0, HIGH);
@@ -559,6 +591,7 @@ void updateRpmRegister(char input)
     setRegisterPin(12, LOW);
     setRegisterPin(13, LOW);
     setRegisterPin(14, LOW);
+    limit = false;
     break;
     case 'j':
     setRegisterPin(0, HIGH);
@@ -576,6 +609,7 @@ void updateRpmRegister(char input)
     setRegisterPin(12, LOW);
     setRegisterPin(13, LOW);
     setRegisterPin(14, LOW);
+    limit = false;
     break;
     case 'k':
     setRegisterPin(0, HIGH);
@@ -593,6 +627,7 @@ void updateRpmRegister(char input)
     setRegisterPin(12, LOW);
     setRegisterPin(13, LOW);
     setRegisterPin(14, LOW);
+    limit = false;
     break;
     case 'l':
     setRegisterPin(0, HIGH);
@@ -610,6 +645,7 @@ void updateRpmRegister(char input)
     setRegisterPin(12, LOW);
     setRegisterPin(13, LOW);
     setRegisterPin(14, LOW);
+    limit = false;
     break;
     case 'm':
     setRegisterPin(0, HIGH);
@@ -627,6 +663,7 @@ void updateRpmRegister(char input)
     setRegisterPin(12, LOW);
     setRegisterPin(13, LOW);
     setRegisterPin(14, LOW);
+    limit = false;
     break;
     case 'n':
     setRegisterPin(0, HIGH);
@@ -644,6 +681,7 @@ void updateRpmRegister(char input)
     setRegisterPin(12, HIGH);
     setRegisterPin(13, LOW);
     setRegisterPin(14, LOW);
+    limit = false;
     break;
     case 'o':
     setRegisterPin(0, HIGH);
@@ -661,6 +699,7 @@ void updateRpmRegister(char input)
     setRegisterPin(12, HIGH);
     setRegisterPin(13, HIGH);
     setRegisterPin(14, LOW);
+    limit = false;
     break;
     case 'p':
     setRegisterPin(0, HIGH);
@@ -678,8 +717,48 @@ void updateRpmRegister(char input)
     setRegisterPin(12, HIGH);
     setRegisterPin(13, HIGH);
     setRegisterPin(14, HIGH);
+    limit = false;
+    break;
+    case 'q':
+    setRegisterPin(0, HIGH);
+    setRegisterPin(1, HIGH);
+    setRegisterPin(2, HIGH);
+    setRegisterPin(3, HIGH);
+    setRegisterPin(4, HIGH);
+    setRegisterPin(5, HIGH);
+    setRegisterPin(6, HIGH);
+    setRegisterPin(7, HIGH);
+    setRegisterPin(8, HIGH);
+    setRegisterPin(9, HIGH);
+    setRegisterPin(10, HIGH);
+    setRegisterPin(11, HIGH);
+    setRegisterPin(12, HIGH);
+    setRegisterPin(13, HIGH);
+    setRegisterPin(14, HIGH);
+    ledState = HIGH;
+    limit = true;
     break;
   }
+  writeRegisters();
+}
+
+void writeAllRpm(int state)
+{
+  setRegisterPin(0, state);
+  setRegisterPin(1, state);
+  setRegisterPin(2, state);
+  setRegisterPin(3, state);
+  setRegisterPin(4, state);
+  setRegisterPin(5, state);
+  setRegisterPin(6, state);
+  setRegisterPin(7, state);
+  setRegisterPin(8, state);
+  setRegisterPin(9, state);
+  setRegisterPin(10, state);
+  setRegisterPin(11, state);
+  setRegisterPin(12, state);
+  setRegisterPin(13, state);
+  setRegisterPin(14, state);
   writeRegisters();
 }
 
