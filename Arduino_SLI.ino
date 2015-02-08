@@ -12,7 +12,7 @@ int RCLK_Pin = 26;
 int SRCLK_Pin = 27;
 
 //How many of the shift registers - change this
-#define number_of_74hc595s 2 
+#define number_of_74hc595s 3 
 
 //do not touch
 #define numOfRegisterPins number_of_74hc595s * 8
@@ -25,6 +25,14 @@ int ledState = LOW;
 long previousMillis = 0;
 long interval = 100;
 boolean limit = false;
+
+//warning lights
+int yelL = 16;
+int yelR = 17;
+int bluL = 18;
+int bluR = 19;
+int redL = 20;
+int redR = 21;
 
 int shiftBrightnessPin = 2;
 
@@ -124,6 +132,13 @@ void setup() {
     setRegisterPin(9, HIGH);
     setRegisterPin(11, HIGH);
     setRegisterPin(13, HIGH);
+    
+    setRegisterPin(yelL, HIGH);
+    setRegisterPin(yelR, HIGH);
+    setRegisterPin(bluL, HIGH);
+    setRegisterPin(bluR, HIGH);
+    setRegisterPin(redL, HIGH);
+    setRegisterPin(redR, HIGH);
     
     writeRegisters();
 
