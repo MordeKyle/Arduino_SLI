@@ -7,9 +7,9 @@ Adafruit_AlphaNum4 dispR = Adafruit_AlphaNum4();
 int gearDpin = 24;
 int gearCpin = 22;
 int gearLpin = 23;
-int SER_Pin = 25;
-int RCLK_Pin = 26;
-int SRCLK_Pin = 27;
+int SER_Pin = 27; //pin 14 on 75HC595
+int RCLK_Pin = 25; //pin 12 on 75HC595
+int SRCLK_Pin = 26; //pin 11 on 75HC595
 
 //How many of the shift registers - change this
 #define number_of_74hc595s 3 
@@ -34,7 +34,7 @@ int bluR = 19;
 int redL = 20;
 int redR = 21;
 
-int shiftBrightnessPin = 2;
+int shiftBrightnessPin = 3;
 
 int shiftBright00 = 239;
 int shiftBright01 = 223;
@@ -107,8 +107,8 @@ void setup() {
     pinMode(shiftBrightnessPin, OUTPUT);
     
     analogWrite(shiftBrightnessPin, shiftBright07);
-    dispL.setBrightness(7);
-    dispR.setBrightness(7);
+    dispL.setBrightness(0);
+    dispR.setBrightness(0);
     
     dispL.writeDigitAscii(0, '<');
     dispL.writeDigitAscii(1, 'D');
