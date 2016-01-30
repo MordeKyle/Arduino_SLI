@@ -23,7 +23,7 @@ char rpmHolder;
 //rpm flash variables
 int ledState = LOW;
 long previousMillis = 0;
-long interval = 100;
+long interval = 500;
 boolean limit = false;
 
 //warning lights
@@ -55,7 +55,7 @@ int shiftBright15 = 0;
 
 byte dash = 0b00000010;
 byte gearR = 0b00001010;
-byte gearN = 0b00101010;
+byte gearN = 0b11111100;
 byte gear1 = 0b01100000;
 byte gear2 = 0b11011010;
 byte gear3 = 0b11110010;
@@ -752,6 +752,24 @@ void updateRpmRegister(char input)
     setRegisterPin(14, HIGH);
     ledState = HIGH;
     limit = true;
+    break;
+    case 'r':
+    setRegisterPin(0, HIGH);
+    setRegisterPin(1, HIGH);
+    setRegisterPin(2, LOW);
+    setRegisterPin(3, LOW);
+    setRegisterPin(4, LOW);
+    setRegisterPin(5, LOW);
+    setRegisterPin(6, LOW);
+    setRegisterPin(7, LOW);
+    setRegisterPin(8, LOW);
+    setRegisterPin(9, LOW);
+    setRegisterPin(10, LOW);
+    setRegisterPin(11, LOW);
+    setRegisterPin(12, LOW);
+    setRegisterPin(13, HIGH);
+    setRegisterPin(14, HIGH);
+    limit = false;
     break;
   }
   writeRegisters();
